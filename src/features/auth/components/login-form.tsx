@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { email, z } from "zod";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 
 import Image from "next/image";
@@ -30,7 +30,6 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { authClient } from "@/lib/auth-client";
-
 
 const loginSchema = z.object({
   email: z.email("Please enter a valid email address"),
@@ -88,6 +87,13 @@ export function LoginForm() {
                     type="button"
                     disabled={isPending}
                   >
+                    {" "}
+                    <Image
+                      alt="Github"
+                      src="/logos/github.svg"
+                      width={20}
+                      height={20}
+                    />
                     Continue with GitHub
                   </Button>
                   <Button
@@ -96,10 +102,16 @@ export function LoginForm() {
                     type="button"
                     disabled={isPending}
                   >
+                    <Image
+                      alt="Google"
+                      src="/logos/google.svg"
+                      width={20}
+                      height={20}
+                    />
                     Continue with Google
                   </Button>
                 </div>
-                <div className="grid- gap-6">
+                <div className="grid gap-6">
                   <FormField
                     control={form.control}
                     name="email"
@@ -117,7 +129,7 @@ export function LoginForm() {
                       </FormItem>
                     )}
                   />
-                  <FormField
+                  <FormField 
                     control={form.control}
                     name="password"
                     render={({ field }) => (
@@ -139,7 +151,7 @@ export function LoginForm() {
                   </Button>
                 </div>
                 <div className="text-center text-sm">
-                  Don&apos; t have an account?{" "}
+                  Don&apos;t have an account?{" "}
                   <Link href="/signup" className="underline underline-offset-4">
                     Sign up
                   </Link>
