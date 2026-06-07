@@ -1,7 +1,5 @@
 import { AppHeader } from "@/components/app-header";
-import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { TooltipProvider } from "@/components/ui/tooltip";
+
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
