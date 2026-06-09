@@ -64,6 +64,7 @@ export const AppSidebar = () => {
                 alt="Nodebase"
                 width={30}
                 height={30}
+                style={{ width: "auto", height: "auto" }}
               />
               <span className="font-semibold text-sm">Nodebase</span>
             </Link>
