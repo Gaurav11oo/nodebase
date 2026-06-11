@@ -34,20 +34,13 @@ export const EntityHeader = ({
         )}
       </div>
       {onNew && !newButtonHref && (
-        <Button 
-          disabled={isCreating || disabled} 
-          size="sm" 
-          onClick={onNew}
-        >
+        <Button disabled={isCreating || disabled} size="sm" onClick={onNew}>
           <PlusIcon className="size-4" />
           {newButtonLabel}
         </Button>
       )}
       {newButtonHref && !onNew && (
-        <Button 
-          size="sm" 
-          asChild
-        >
+        <Button size="sm" asChild>
           <Link href={newButtonHref} prefetch>
             <PlusIcon className="size-4" />
             {newButtonLabel}
@@ -82,5 +75,5 @@ export const EntityContainer = ({
         {pagination}
       </div>
     </div>
-  )
+  );
 };

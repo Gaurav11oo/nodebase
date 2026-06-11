@@ -7,12 +7,12 @@ import { toast } from "sonner";
  */
 export const useSuspenseWorkflows = () => {
   const trpc = useTRPC();
-  
+
   return useSuspenseQuery(trpc.workflows.getMany.queryOptions());
 };
 
 /**
- * Hook to create a new workflow
+ * Hook to create a new workflowh
  */
 export const useCreateWorkflow = () => {
   const queryClient = useQueryClient();
