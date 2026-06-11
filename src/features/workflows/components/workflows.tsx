@@ -1,7 +1,10 @@
 "use client";
 
 import { EntityContainer, EntityHeader } from "@/components/entity-components";
-import { useCreateWorkflow, useSuspenseWorkflows } from "../hooks/use-workflows"
+import {
+  useCreateWorkflow,
+  useSuspenseWorkflows,
+} from "../hooks/use-workflows";
 import { useUpgradeModal } from "@/hooks/use-upgrade-modal";
 import { useRouter } from "next/navigation";
 
@@ -10,9 +13,7 @@ export const WorkflowsList = () => {
 
   return (
     <div className="flex-1 flex justify-center items-center">
-      <p>
-        {JSON.stringify(workflows.data, null, 2)}
-      </p>
+      <p>{JSON.stringify(workflows.data, null, 2)}</p>
     </div>
   );
 };
@@ -31,7 +32,7 @@ export const WorkflowsHeader = ({ disabled }: { disabled?: boolean }) => {
         handleError(error);
       },
     });
-  }
+  };
 
   return (
     <>
@@ -49,7 +50,7 @@ export const WorkflowsHeader = ({ disabled }: { disabled?: boolean }) => {
 };
 
 export const WorkflowsContainer = ({
-  children
+  children,
 }: {
   children: React.ReactNode;
 }) => {
