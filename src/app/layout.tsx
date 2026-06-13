@@ -4,7 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { TRPCReactProvider } from "@/trpc/client";
 import { Toaster } from "@/components/ui/sonner";
-
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 const outfitHeading = Outfit({
   subsets: ["latin"],
   variable: "--font-heading",
@@ -46,8 +46,11 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-full flex flex-col">
-        <TRPCReactProvider>{children}
-          <Toaster/>
+        <TRPCReactProvider>
+          <NuqsAdapter>
+            {children}
+            <Toaster />
+          </NuqsAdapter>
         </TRPCReactProvider>
       </body>
     </html>
