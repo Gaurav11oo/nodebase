@@ -77,8 +77,8 @@ model Workflow {
   nodes       Node[]
   connections Connection[]
 
-  userId      String
-  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("workflow")
 }
@@ -87,6 +87,7 @@ enum NodeType {
   INITIAL
   MANUAL_TRIGGER
   HTTP_REQUEST
+  GOOGLE_FORM_TRIGGER
 }
 
 model Node {
