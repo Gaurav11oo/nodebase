@@ -7,9 +7,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     <TooltipProvider>
       <SidebarProvider>
         <AppSidebar />
-        <SidebarInset className="bg-accent/20">
-          {children}
-        </SidebarInset>
+        <SidebarInset className="bg-accent/20">{children}</SidebarInset>
       </SidebarProvider>
     </TooltipProvider>
   );
