@@ -9,7 +9,6 @@ import { inngest } from "@/inngest/client";
 import { sendWorkflowExecution } from "@/inngest/utils";
 
 export const workflowsRouter = createTRPCRouter({
-
     execute: protectedProcedure
         .input(z.object({ id: z.string() }))
         .mutation(async ({ input, ctx }) => {
@@ -20,19 +19,12 @@ export const workflowsRouter = createTRPCRouter({
                 },
             });
 
-            await inngest.send({
-                name: "workflows/execute.workflow",
-                data: { workflowId: input.id },
-            });
-
             await sendWorkflowExecution({
                 workflowId: input.id,
-            })
+            });
 
             return workflow;
         }),
-
-
     create: premiumProcedure.mutation(({ ctx }) => {
         return prisma.workflow.create({
             data: {
