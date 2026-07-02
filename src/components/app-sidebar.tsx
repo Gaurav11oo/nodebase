@@ -62,9 +62,9 @@ export const AppSidebar = () => {
               <Image
                 src="/logos/logo.svg"
                 alt="Nodebase"
-                width={30}
-                height={30}
-                style={{ width: "auto", height: "auto" }}
+                width={55}
+                height={40}
+                // style={{ width: "auto", height: "auto" }}
               />
               <span className="font-semibold text-sm">Nodebase</span>
             </Link>

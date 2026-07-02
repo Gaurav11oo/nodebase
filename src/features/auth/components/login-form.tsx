@@ -1,15 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-
-import Image from "next/image";
-import Link from "next/link";
-
 import {
   Card,
   CardContent,
@@ -17,7 +15,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
 import {
   Form,
   FormControl,
@@ -26,9 +23,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
 import { Input } from "@/components/ui/input";
-
 import { authClient } from "@/lib/auth-client";
 
 const loginSchema = z.object({
@@ -48,6 +43,38 @@ export function LoginForm() {
       password: "",
     },
   });
+
+  const signInGithub = async () => {
+    await authClient.signIn.social(
+      {
+        provider: "github",
+      },
+      {
+        onSuccess: () => {
+          router.push("/");
+        },
+        onError: () => {
+          toast.error("Something went wrong");
+        },
+      }
+    );
+  };
+
+  const signInGoogle = async () => {
+    await authClient.signIn.social(
+      {
+        provider: "google",
+      },
+      {
+        onSuccess: () => {
+          router.push("/");
+        },
+        onError: () => {
+          toast.error("Something went wrong");
+        },
+      }
+    );
+  };
 
   const onSubmit = async (values: LoginFormValues) => {
     await authClient.signIn.email(
@@ -82,14 +109,14 @@ export function LoginForm() {
               <div className="grid gap-6">
                 <div className="flex flex-col gap-4">
                   <Button
+                    onClick={signInGithub}
                     variant="outline"
-                    className="w-fill"
+                    className="w-full"
                     type="button"
                     disabled={isPending}
                   >
-                    {" "}
                     <Image
-                      alt="Github"
+                      alt="GitHub"
                       src="/logos/github.svg"
                       width={20}
                       height={20}
@@ -97,8 +124,9 @@ export function LoginForm() {
                     Continue with GitHub
                   </Button>
                   <Button
+                    onClick={signInGoogle}
                     variant="outline"
-                    className="w-fill"
+                    className="w-full"
                     type="button"
                     disabled={isPending}
                   >
@@ -121,7 +149,7 @@ export function LoginForm() {
                         <FormControl>
                           <Input
                             type="email"
-                            placeholder="me@example.com"
+                            placeholder="m@example.com"
                             {...field}
                           />
                         </FormControl>
@@ -129,7 +157,7 @@ export function LoginForm() {
                       </FormItem>
                     )}
                   />
-                  <FormField 
+                  <FormField
                     control={form.control}
                     name="password"
                     render={({ field }) => (
