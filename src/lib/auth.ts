@@ -35,7 +35,7 @@ export const auth = betterAuth({
               slug: "pro",
             },
           ],
-          successUrl: process.env.POLAR_SUCCESS_URL,
+          successUrl: process.env.POLAR_SUCCESS_URL || "/workflows",
           authenticatedUsersOnly: true,
         }),
         portal(),

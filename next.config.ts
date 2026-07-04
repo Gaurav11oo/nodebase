@@ -1,20 +1,65 @@
+// import { withSentryConfig } from "@sentry/nextjs";
+// import type { NextConfig } from "next";
+
+// const nextConfig: NextConfig = {
+//   // http://localhost:3000/workflows
+//   async redirects() {
+//     return [
+//       {
+//         // source: "/",
+//         // destination: "/workflows",
+//         source: "/(.*)",
+//         destination: "/",
+//         permanent: true,
+//       },
+//     ];
+//   },
+
+//   reactCompiler: true,
+// };
+
+
 import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // http://localhost:3000/workflows
-  async redirects() {
+  serverExternalPackages: ["emailmd"],
+  devIndicators: false,
+  /* config options here */
+  /* redirects removed to show landing page */
+  async headers() {
+    const securityHeaders = [
+      {
+        key: "X-Frame-Options",
+        value: "DENY",
+      },
+      {
+        key: "X-Content-Type-Options",
+        value: "nosniff",
+      },
+      {
+        key: "Referrer-Policy",
+        value: "strict-origin-when-cross-origin",
+      },
+    ];
+
+    // Only include HSTS in production to avoid locking browsers during local development
+    if (process.env.NODE_ENV === "production") {
+      securityHeaders.push({
+        key: "Strict-Transport-Security",
+        value: "max-age=63072000; includeSubDomains; preload",
+      });
+    }
+
     return [
       {
-        source: "/",
-        destination: "/workflows",
-        permanent: false,
+        source: "/(.*)",
+        headers: securityHeaders,
       },
     ];
   },
-
-  reactCompiler: true,
 };
+
 
 export default withSentryConfig(nextConfig, {
   // For all available options, see:

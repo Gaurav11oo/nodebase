@@ -3,27 +3,24 @@
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { SaveIcon } from "lucide-react";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Input } from "@/components/ui/input";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-import {
-  useSuspenseWorkflow,
-  useUpdateWorkflow,
-  useUpdateWorkflowName,
-} from "@/features/workflows/hooks/use-workflows";
+import { useSuspenseWorkflow, useUpdateWorkflow, useUpdateWorkflowName } from "@/features/workflows/hooks/use-workflows";
 import { useAtomValue } from "jotai";
-import { editorAtom } from "../store/atom";
+
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAtom } from "jotai";
+import { editorAtom, viewModeAtom } from "../store/atom";
+import { RefreshPageButton } from "./EditorRefreshButton";
+
 
 export const EditorSaveButton = ({ workflowId }: { workflowId: string }) => {
+
   const editor = useAtomValue(editorAtom);
   const saveWorkflow = useUpdateWorkflow();
+
   const handleSave = () => {
     if (!editor) {
       return;
@@ -35,41 +32,44 @@ export const EditorSaveButton = ({ workflowId }: { workflowId: string }) => {
       id: workflowId,
       nodes,
       edges,
-    });
-  };
+    })
+  }
 
   return (
     <div className="ml-auto">
-      <Button size="sm" onClick={handleSave} disabled={saveWorkflow.isPending}>
+      
+      <Button
+        size="sm"
+        onClick={handleSave}
+        disabled={saveWorkflow.isPending}
+        id="save-workflow-button"
+      >
         <SaveIcon className="size-4" />
         Save
       </Button>
     </div>
-  );
+  )
 };
 
 export const EditorNameInput = ({ workflowId }: { workflowId: string }) => {
   const { data: workflow } = useSuspenseWorkflow(workflowId);
-
   const updateWorkflow = useUpdateWorkflowName();
-
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(workflow.name);
-
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (workflow.name) {
       setName(workflow.name);
     }
-  }, [workflow.name]);
+  }, [workflow.name])
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
       inputRef.current.focus();
       inputRef.current.select();
     }
-  }, [isEditing]);
+  }, [isEditing])
 
   const handleSave = async () => {
     if (name === workflow.name) {
@@ -81,9 +81,9 @@ export const EditorNameInput = ({ workflowId }: { workflowId: string }) => {
       await updateWorkflow.mutateAsync({
         id: workflowId,
         name,
-      });
+      })
     } catch {
-      setName(workflow.name);
+      setName(workflow.name)
     } finally {
       setIsEditing(false);
     }
@@ -93,7 +93,7 @@ export const EditorNameInput = ({ workflowId }: { workflowId: string }) => {
     if (e.key === "Enter") {
       handleSave();
     } else if (e.key === "Escape") {
-      setName(workflow.name);
+      setName(workflow.name)
       setIsEditing(false);
     }
   };
@@ -108,18 +108,16 @@ export const EditorNameInput = ({ workflowId }: { workflowId: string }) => {
         onBlur={handleSave}
         onKeyDown={handleKeyDown}
         className="h-7 w-auto min-w-[100px] px-2"
+        data-onboarding="workflow-name"
       />
-    );
+    )
   }
 
   return (
-    <BreadcrumbItem
-      onClick={() => setIsEditing(true)}
-      className="cursor-pointer hover:text-foreground transition-colors"
-    >
+    <BreadcrumbItem onClick={() => setIsEditing(true)} className="cursor-pointer hover:text-foreground transition-colors" data-onboarding="workflow-name">
       {workflow.name}
     </BreadcrumbItem>
-  );
+  )
 };
 
 export const EditorBreadcrumbs = ({ workflowId }: { workflowId: string }) => {
@@ -128,16 +126,29 @@ export const EditorBreadcrumbs = ({ workflowId }: { workflowId: string }) => {
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link prefetch href="/workflows">
-              Workflows
-            </Link>
+            <Link href="/workflows">Workflows</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <EditorNameInput workflowId={workflowId} />
       </BreadcrumbList>
     </Breadcrumb>
-  );
+
+  )
+};
+
+export const ViewModeSelector = () => {
+  const [viewMode, setViewMode] = useAtom(viewModeAtom);
+
+  return (
+    <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as any)} className="w-[200px]">
+      <TabsList className="grid w-full grid-cols-2 h-9 rounded-lg bg-muted border shadow-lg">
+        <TabsTrigger value="workflow" className="text-xs rounded-md data-[state=active]:bg-background data-[state=active]:shadow-md">
+          Editor</TabsTrigger>
+        <TabsTrigger value="executions" id="view-executions-tab" className="text-xs rounded-md data-[state=active]:bg-background data-[state=active]:shadow-md">Executions</TabsTrigger>
+      </TabsList>
+    </Tabs>
+  )
 };
 
 export const EditorHeader = ({ workflowId }: { workflowId: string }) => {
@@ -150,4 +161,4 @@ export const EditorHeader = ({ workflowId }: { workflowId: string }) => {
       </div>
     </header>
   );
-};
+}

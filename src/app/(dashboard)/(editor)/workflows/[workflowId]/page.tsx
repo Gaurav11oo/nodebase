@@ -3,7 +3,7 @@ import {
   EditorError,
   EditorLoading,
 } from "@/features/editor/components/editor";
-import { EditorHeader } from "@/features/editor/components/editor-header";
+import { EditorHeader, ViewModeSelector } from "@/features/editor/components/editor-header";
 import { prefetchWorkflow } from "@/features/workflows/server/prefetch";
 import { requireAuth } from "@/lib/auth-utils";
 import { HydrateClient } from "@/trpc/server";
@@ -27,7 +27,10 @@ const Page = async ({ params }: PageProps) => {
       <ErrorBoundary fallback={<EditorError />}>
         <Suspense fallback={<EditorLoading />}>
           <EditorHeader workflowId={workflowId} />
-          <main className="flex-1">
+          <main className="flex-1 relative">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[10]">
+              <ViewModeSelector />
+            </div>
             <Editor workflowId={workflowId} />
           </main>
         </Suspense>
