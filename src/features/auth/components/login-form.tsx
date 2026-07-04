@@ -51,7 +51,7 @@ export function LoginForm() {
       },
       {
         onSuccess: () => {
-          router.push("/");
+          router.push("/workflows");
         },
         onError: () => {
           toast.error("Something went wrong");
@@ -67,7 +67,7 @@ export function LoginForm() {
       },
       {
         onSuccess: () => {
-          router.push("/");
+          router.push("/workflows");
         },
         onError: () => {
           toast.error("Something went wrong");
@@ -81,11 +81,12 @@ export function LoginForm() {
       {
         email: values.email,
         password: values.password,
-        callbackURL: "/",
+        callbackURL: "/workflows",
       },
       {
         onSuccess: () => {
-          router.push("/");
+          router.push("/workflows");
+          toast.success("Login Succesfully !!!");
         },
         onError: (ctx) => {
           toast.error(ctx.error.message);

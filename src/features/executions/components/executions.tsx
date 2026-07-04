@@ -22,6 +22,7 @@ import {
   XCircleIcon,
 } from "lucide-react";
 
+
 export const ExecutionsList = () => {
   const executions = useSuspenseExecutions();
 
@@ -37,6 +38,8 @@ export const ExecutionsList = () => {
 
 export const ExecutionsHeader = () => {
   return (
+
+
     <EntityHeader
       title="Executions"
       description="View your workflow execution history"
@@ -116,10 +119,10 @@ export const ExecutionItem = ({
 }) => {
   const duration = data.completedAt
     ? Math.round(
-        (new Date(data.completedAt).getTime() -
-          new Date(data.startedAt).getTime()) /
-          1000
-      )
+      (new Date(data.completedAt).getTime() -
+        new Date(data.startedAt).getTime()) /
+      1000
+    )
     : null;
 
   const subtitle = (

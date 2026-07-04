@@ -64,7 +64,7 @@ export const AppSidebar = () => {
                 alt="Nodebase"
                 width={55}
                 height={40}
-                // style={{ width: "auto", height: "auto" }}
+              // style={{ width: "auto", height: "auto" }}
               />
               <span className="font-semibold text-sm">Nodebase</span>
             </Link>
@@ -132,7 +132,7 @@ export const AppSidebar = () => {
                 authClient.signOut({
                   fetchOptions: {
                     onSuccess: () => {
-                      router.push("/login");
+                      router.push("/");
                     },
                   },
                 })
