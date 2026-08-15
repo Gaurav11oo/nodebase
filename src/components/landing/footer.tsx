@@ -29,7 +29,7 @@ export const Footer = () => {
 
                             <div className="flex items-center gap-4 mt-auto">
                                 <Link
-                                    href="https://github.com/garav11oo/nodebase"
+                                    href="https://github.com/gaurav11oo/nodebase"
                                     className="text-neutral-400 hover:text-white transition-colors"
                                     aria-label="Nodebase on GitHub"
                                 >
